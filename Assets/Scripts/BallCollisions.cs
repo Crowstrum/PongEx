@@ -37,6 +37,14 @@ public class BallCollisions : MonoBehaviour
            
         }
 
+        if (collision.gameObject.tag == "RightPaddle")
+        {
+            var yPos = hitFactor(transform.position, collision.transform.position, collision.transform.localScale.y);
+            var direction = new Vector3(-1, yPos, 0).normalized;
+            EventManager.Instance.QueueEvent(new AddForceEvent(direction, PaddleForce));
+
+        }
+
         if (collision.gameObject.tag == "Wall")
         {
             collision.contacts.ToList().ForEach(_ =>

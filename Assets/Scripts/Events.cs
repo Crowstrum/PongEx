@@ -18,9 +18,9 @@ public class AddForceEvent : GameEvent
 
 public class LoadScene : GameEvent
 {
-    public PongGameManager.GameStates SceneName;
+    public GameStates SceneName;
 
-    public LoadScene(PongGameManager.GameStates name)
+    public LoadScene(GameStates name)
     {
         this.SceneName = name;
     }

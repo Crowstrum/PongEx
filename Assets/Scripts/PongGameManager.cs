@@ -8,15 +8,7 @@ namespace Assets.Scripts
         public GameObject Ball;
         public GameObject Paddle;
         public GameStates CurrentGameStates;
-        public enum GameStates
-        {
-            Title,
-            MainMenu,
-            DifficultySelect,
-            MultiplayerLogin,
-            MultiplayerGame,
-            SinglePlayerGame
-        }
+        
 
         public enum DifficultyLevel
         {
@@ -26,29 +18,12 @@ namespace Assets.Scripts
         }
         protected PongGameManager() { }
 
-        void Awake()
-        {
-            EventManager.Instance.AddListener<LoadScene>(LoadSceneByName);
-        }
-
-        private void LoadSceneByName(LoadScene e)
-        {
-            if (!CheckCurrentScene(e.SceneName.ToString()))
-            {
-                CurrentGameStates = e.SceneName;
-                SceneManager.LoadScene(e.SceneName.ToString());
-            }
-        }
+       
 
         // Use this for initialization
         void Start()
         {
-            CurrentGameStates = GameStates.Title;
-            if (CheckCurrentScene("TitleScreenScene"))
-            { 
-                return;
-            }
-            SceneManager.LoadScene("TitleScreenScene");
+           
 
         }
 
@@ -76,22 +51,15 @@ namespace Assets.Scripts
 
         private void MainMenuLogic()
         {
-            if (!CheckCurrentScene("MainMenuScene"))
-            {
-                SceneManager.LoadScene("MainMenuScene");
-            }
+           
         }
 
-        private bool CheckCurrentScene(string sceneName)
-        {
-            return SceneManager.GetActiveScene().name == sceneName;
-        }
-
+       
         private void TitleSceneLogic()
         {
             if (Input.anyKey)
             {
-                CurrentGameStates = GameStates.MainMenu;
+                EventManager.Instance.QueueEvent(new LoadScene(GameStates.MainMenu));
             }
         }
     }
